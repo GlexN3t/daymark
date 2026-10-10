@@ -149,12 +149,14 @@ daymark/
   (`.github/dependabot.yml`) for weekly updates, and CodeQL analysis on push
   (`.github/workflows/codeql.yml`). Known `npm audit` findings triaged at
   release time: the esbuild dev-server notice is build-tooling only (never
-  shipped to browsers), and the react-router open-redirect advisories require
-  attacker-controlled navigation paths — every `Link`/`navigate` in this app
-  uses hardcoded internal routes, and there is no SSR — so neither is
-  exploitable here. The react-router v7 line (which carries the remaining
-  backslash-redirect fix) is left for Dependabot to propose as a deliberate
-  major upgrade.
+  shipped to browsers), the vite `server.fs.deny` bypass (GHSA-fx2h-pf6j-xcff)
+  targets the dev server on Windows only — this project is developed on Linux
+  and ships static files, so neither applies — and the react-router
+  open-redirect advisories require attacker-controlled navigation paths — every
+  `Link`/`navigate` in this app uses hardcoded internal routes, and there is
+  no SSR — so neither is exploitable here. The vite/react-router v7+ lines
+  (which carry the remaining fixes) are left for Dependabot to propose as
+  deliberate major upgrades.
 
 ## Roadmap
 Things I'd do next, roughly in order:
