@@ -28,13 +28,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - name: Build backend
-        if: matrix.language == 'csharp'
-        run: dotnet build backend/Daymark.sln -c Release
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+      # The build must run AFTER init so CodeQL can observe the compilation.
+      - name: Build backend
+        if: matrix.language == 'csharp'
+        run: dotnet build backend/Daymark.sln -c Release
       - name: Analyze
         uses: github/codeql-action/analyze@v3
         with:
